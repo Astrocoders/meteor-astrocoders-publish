@@ -45,6 +45,7 @@ Liked? And how about this one:
 ```
 
 Of course you can do more than one publication!:
+
 in client:
 ```js
   this.subscribe('itemsEdit', FlowRouter.getParam('_id'));
@@ -101,3 +102,6 @@ There are just three types of methods available:
 - `mongoRule`
   The return of these methods will be merge into a single object and will be used
   as the second argument of the `Collection.find(query, mongoRules)`.
+
+## License
+MIT. Enjoy!
