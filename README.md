@@ -57,7 +57,7 @@ Items.publish('itemsEdit').isOwner().query((itemId, userId) => {
   return {
     itemId
   }
-});
+}).apply();
 ```
 
 ## Usage
@@ -83,7 +83,7 @@ Call `.publish(pubName)` and the chain the methods you want and then invoke
         _id: 1
       }
     }
-  });
+  }).apply();
   // And the subscription will only get those fields.
 ```
 
