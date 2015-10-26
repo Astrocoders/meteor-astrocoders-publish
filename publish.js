@@ -7,12 +7,16 @@ class AstroPublish {
     this._collection = collection;
   }
 
-  static defineMethod(type, name, fn){
-    if(AstroPublish.prototype[name]){
+  static defineMethod(options){
+    if(AstroPublish.prototype[options.name]){
       throw new Error('Already defined');
     }
 
-    if(!_.contains(['predicate', 'mongoRule', 'query'], type)){
+    if(!_.isObject(options)){
+      throw new Error('Options must be an object');
+    }
+
+    if(!_.contains(['predicate', 'mongoRule', 'query'], options.type)){
       throw new Error(`Such method type ${type} doesn\'t exist`);
     }
 
@@ -22,9 +26,10 @@ class AstroPublish {
       query: '_queries'
     };
 
-    AstroPublish.prototype[ name ] = function(...args){
-      this[ methods[type] ].push({
-        fn,
+    AstroPublish.prototype[ options.name ] = function(...args){
+      this[ methods[options.type] ].push({
+        fn: options.fn,
+        context: options.context,
         args
       });
 
@@ -58,7 +63,9 @@ AP = AstroPublish;
 function compactMethods(methods, astroPublish, args, userId){
   return _.reduce(methods, function(rules, rule){
     let fn = _.isFunction(rule.args[0]) ? rule.args[0] : rule.fn;
-    return _.extend(rules, fn.call(astroPublish, ...args, userId));
+    let fnArgs = rule.context === 'chain' ? rule.args : args;
+
+    return _.extend(rules, fn.call(astroPublish, ...fnArgs, userId));
   }, {});
 }
 
