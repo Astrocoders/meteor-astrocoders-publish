@@ -103,7 +103,7 @@ param and the query for the correspondent document in the database (`{_id: id}`)
 this.subscribe('fooEdit', fooId);
 
 // ...
-Items.publish('fooEdit').byGotId();
+Items.publish('fooEdit').byGotId().apply();
 ```
 
 ## Extending with custom methods
@@ -132,7 +132,7 @@ AstroPublish.defineMethod({
 });
 
 // ...
-Items.publish('items').hasPriceBetween(50, 100);
+Items.publish('items').hasPriceBetween(50, 100).apply();
 
 ```
 But if instead of getting the arguments from the chain context, you wanna
@@ -160,7 +160,7 @@ AstroPublish.defineMethod({
 });
 
 // ...
-Items.publish('items').hasPriceBetween(50, 100);
+Items.publish('items').hasPriceBetween(50, 100).apply();
 ```
 
 - `predicate`
@@ -180,7 +180,7 @@ AstroPublish.defineMethod({
 });
 
 // ...
-Items.publish('items').ifUserIsCool();
+Items.publish('items').ifUserIsCool().apply();
 ```
 - `mongoRule`
   The return of these methods will be merge into a single object and will be used
@@ -198,7 +198,7 @@ AstroPublish.defineMethod({
 });
 
 // ...
-Items.publish('items').skip(5);
+Items.publish('items').skip(5).apply();
 ```
 
 ## License
