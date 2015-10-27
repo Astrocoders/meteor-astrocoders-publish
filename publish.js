@@ -17,7 +17,7 @@ AstroPublish = class {
     }
 
     if(!_.contains(['predicate', 'mongoRule', 'query'], options.type)){
-      throw new Error(`Such method type ${type} doesn\'t exist`);
+      throw new Error(`Such method type ${options.type} doesn\'t exist`);
     }
 
     let methods = {
