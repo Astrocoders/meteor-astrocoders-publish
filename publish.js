@@ -1,4 +1,4 @@
-class xAstroPublish {
+AstroPublish = class {
   constructor(name, collection){
     this._predicates = [];
     this._mongoRules = [];
@@ -8,7 +8,7 @@ class xAstroPublish {
   }
 
   static defineMethod(options){
-    if(xAstroPublish.prototype[options.name]){
+    if(AstroPublish.prototype[options.name]){
       throw new Error('Already defined');
     }
 
@@ -26,7 +26,7 @@ class xAstroPublish {
       query: '_queries'
     };
 
-    xAstroPublish.prototype[ options.name ] = function(...args){
+    AstroPublish.prototype[ options.name ] = function(...args){
       this[ methods[options.type] ].push({
         fn: options.fn,
         context: options.context,
@@ -58,15 +58,14 @@ class xAstroPublish {
   }
 }
 
-AP = xAstroPublish;
-AstroPublish = xAstroPublish;
+AP = AstroPublish;
 
-function compactMethods(methods, xAstroPublish, args, userId){
+function compactMethods(methods, AstroPublish, args, userId){
   return _.reduce(methods, function(rules, rule){
     let fn = _.isFunction(rule.args[0]) ? rule.args[0] : rule.fn;
     let fnArgs = rule.context === 'chain' ? rule.args : args;
 
-    return _.extend(rules, fn.call(xAstroPublish, ...fnArgs, userId));
+    return _.extend(rules, fn.call(AstroPublish, ...fnArgs, userId));
   }, {});
 }
 
@@ -75,5 +74,5 @@ Mongo.Collection.prototype.publish = function(name){
     throw new Error('[AstroPublish] You have to specify the publish name');
   }
 
-  return new xAstroPublish(name, this);
+  return new AstroPublish(name, this);
 };
