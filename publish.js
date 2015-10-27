@@ -46,7 +46,7 @@ AstroPublish = class {
       let rules = compactMethods(self._mongoRules, self, args, userId);
 
       let allPredicatesPass = _.every(self._predicates, (predicate) => {
-        return predicate.fn.call(self, ...predicate.args, userId) === true;
+        return predicate.fn.call(this, ...predicate.args, userId) === true;
       });
 
       if(allPredicatesPass){
@@ -56,7 +56,7 @@ AstroPublish = class {
       }
     });
   }
-}
+};
 
 AP = AstroPublish;
 

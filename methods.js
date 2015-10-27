@@ -5,13 +5,3 @@ AP.defineMethod({
     return !!userId;
   }
 });
-
-AP.defineMethod({
-  type: 'predicate',
-  name: 'unblock',
-  fn: function(){
-    this.unblock();
-
-    return true;
-  }
-});

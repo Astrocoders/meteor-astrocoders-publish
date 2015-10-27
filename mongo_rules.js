@@ -1,6 +1,8 @@
+/* globals AP */
+
 AP.defineMethod({
   type: 'mongoRule',
-  name: 'lastest',
+  name: 'latest',
   fn: function(){
     return {
       sort: {
@@ -25,7 +27,7 @@ AP.defineMethod({
   name: 'mongoRule',
   fn: function(fn){
     if(!_.isFunction(fn)){
-      throw new Error('[AstroPublish] Custom function must always be an function.');
+      throw new Error(`[AstroPublish] Param ${fn} is not a function.`);
     }
 
     return fn;
