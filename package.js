@@ -1,6 +1,6 @@
 Package.describe({
   name: 'astrocoders:publish',
-  version: '0.0.3',
+  version: '0.0.4',
   summary: 'Smart re-use your publications.',
   git: 'https://github.com/Astrocoders/meteor-astrocoders-publish',
   documentation: 'README.md'
