@@ -17,7 +17,7 @@ AstroPublish = class {
     }
 
     if(!_.contains(['predicate', 'mongoRule', 'query'], options.type)){
-      throw new Error(`Such method type ${options.type} doesn\'t exist`);
+      throw new Error(`Such method type ${options.type} doesnt exist`);
     }
 
     let methods = {
@@ -70,7 +70,7 @@ function compactMethods(methods, AstroPublish, args, userId){
 }
 
 Mongo.Collection.prototype.publish = function(name){
-  if(!name){
+  if(_.isUndefined(name)){
     throw new Error('[AstroPublish] You have to specify the publish name');
   }
 
