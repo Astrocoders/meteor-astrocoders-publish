@@ -1,0 +1,2 @@
+Mongo = {};
+Mongo.Collection = {};

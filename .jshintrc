@@ -61,13 +61,6 @@
   "onevar": false,
   "passfail": false,
   "white": false,
-  // Do not extend the prototype of native objects.
-  "freeze": true,
-  // You must use obj.hasOwnProperty whithin for..in loops
-  "forin": true,
-  // You lodash or underscore instead!
-  "notypeof": true,
-
   "predef": [
     "Meteor",
     "DDP",
@@ -109,14 +102,9 @@
     "$",
     "Router",
     "RouteController",
-    "FlowRouter",
-    "Geolocation",
-    "Addresses",
     "mixpanel",
     "toastr",
-    "cordova",
-    "BlazeLayout",
-
+    "AP",
     "AstroPublish"
   ]
 }
