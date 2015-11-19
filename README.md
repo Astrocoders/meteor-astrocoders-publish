@@ -32,16 +32,18 @@ AstroPublish:
 
 Liked? And how about this one:
 ```js
-  AstroPublish.defineMethod('query', 'isOwner', function(userId){
-    return {
-      owner: userId
-    }
-  });
+// `this` is the context of Meteor.publish
 
-  // ...
+AstroPublish.defineMethod('query', 'isOwner', function(){
+  return {
+    owner: this.userId
+  }
+});
 
-  Items.publish('items').ifSignedIn().isOwner().apply();
-  Photos.publish('photos').ifSignedIn().isOwner().one().lastest().apply();
+// ...
+
+Items.publish('items').ifSignedIn().isOwner().apply();
+Photos.publish('photos').ifSignedIn().isOwner().one().lastest().apply();
 ```
 
 Of course you can do more than one publication!:
@@ -52,9 +54,7 @@ in client:
 ```
 in server:
 ```js
-// The userId param is the `this.userId` from inside the Meteor.publish
-// it is always the lastest argument of methods.
-Items.publish('itemsEdit').isOwner().query((itemId, userId) => {
+Items.publish('itemsEdit').isOwner().query((itemId) => {
   return {
     itemId
   }
@@ -120,7 +120,7 @@ AstroPublish.defineMethod({
   // with `context: 'chain'` option.fn callback will receive
   // the arguments from the chain, like it is in built-in method `field`
   context: 'chain',
-  fn: function(min, max, userId){
+  fn: function(min, max){
     // Return a query here
     return {
       price: {
@@ -148,7 +148,7 @@ AstroPublish.defineMethod({
   name: 'hasPriceBetween',
   // Without the 'context: chain' the arguments here are the arguments
   // received by the `Meteor.publish` from subscription.
-  fn: function(min, max, userId){
+  fn: function(min, max){
     // Return a query here
     return {
       price: {
@@ -172,8 +172,8 @@ AstroPublish.defineMethod({
   type: 'predicate',
   // you can use 'context: chain' here too
   name: 'ifUserIsCool',
-  fn: function(userId){
-    let user = Meteor.users.findOne(userId);
+  fn: function(){
+    let user = Meteor.users.findOne(this.userId);
 
     return !!user.isCool;
   }
@@ -199,6 +199,13 @@ AstroPublish.defineMethod({
 
 // ...
 Items.publish('items').skip(5).apply();
+```
+
+## Testing
+Run tests using Meteor Command
+
+```
+$ meteor test-packages ./
 ```
 
 ## License
