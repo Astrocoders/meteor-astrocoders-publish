@@ -34,9 +34,13 @@ Liked? And how about this one:
 ```js
 // `this` is the context of Meteor.publish
 
-AstroPublish.defineMethod('query', 'isOwner', function(){
-  return {
-    owner: this.userId
+AstroPublish.defineMethod({
+  type: 'query',
+  name: 'isOwner',
+  fn(){
+    return {
+      owner: this.userId
+    }
   }
 });
 
