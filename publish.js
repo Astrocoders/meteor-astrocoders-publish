@@ -9,7 +9,7 @@ AstroPublish = class {
 
   static defineMethod(options){
     if(AstroPublish.prototype[options.name]){
-      throw new Error('Already defined');
+      console.warn(`AstroPublish#${options.name} Already defined`);
     }
 
     if(!_.isObject(options)){
@@ -37,17 +37,33 @@ AstroPublish = class {
     };
   }
 
+  static compactMethods(methods, pub, args){
+    return _.reduce(methods, function(rules, rule){
+      let fn = _.isFunction(rule.args[0]) ? rule.args[0] : rule.fn;
+      let fnArgs = rule.context === 'chain' ? rule.args : args;
+
+      return _.extend(rules, fn.call(pub, ...fnArgs));
+    }, {});
+  }
+
+  ensureConditions(pub, pubArgs){
+    return  _.every(this._predicates, (predicate) => {
+      let fnArgs = predicate.context === 'chain' ? predicate.args : pubArgs;
+
+      return predicate.fn.call(pub, ...fnArgs) === true;
+    });
+  }
+
   apply(){
     let self = this;
 
     Meteor.publish(this._name, function(...args){
-      let userId = this.userId;
-      let query = compactMethods(self._queries, self, args, userId);
-      let rules = compactMethods(self._mongoRules, self, args, userId);
+      let query =
+        AstroPublish.compactMethods(self._queries, this, args);
+      let rules =
+        AstroPublish.compactMethods(self._mongoRules, this, args);
 
-      let allPredicatesPass = _.every(self._predicates, (predicate) => {
-        return predicate.fn.call(this, ...predicate.args, userId) === true;
-      });
+      let allPredicatesPass = self.ensureConditions(this);
 
       if(allPredicatesPass){
         return self._collection.find(query, rules);
@@ -59,15 +75,6 @@ AstroPublish = class {
 };
 
 AP = AstroPublish;
-
-function compactMethods(methods, AstroPublish, args, userId){
-  return _.reduce(methods, function(rules, rule){
-    let fn = _.isFunction(rule.args[0]) ? rule.args[0] : rule.fn;
-    let fnArgs = rule.context === 'chain' ? rule.args : args;
-
-    return _.extend(rules, fn.call(AstroPublish, ...fnArgs, userId));
-  }, {});
-}
 
 Mongo.Collection.prototype.publish = function(name){
   if(_.isUndefined(name)){
