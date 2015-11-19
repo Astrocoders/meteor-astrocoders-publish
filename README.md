@@ -47,7 +47,7 @@ AstroPublish.defineMethod({
 // ...
 
 Items.publish('items').ifSignedIn().isOwner().apply();
-Photos.publish('photos').ifSignedIn().isOwner().one().lastest().apply();
+Photos.publish('photos').ifSignedIn().isOwner().one().latest().apply();
 ```
 
 Of course you can do more than one publication!:
