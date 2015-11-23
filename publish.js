@@ -1,7 +1,7 @@
 let astroMethods = {};
 
 AP = AstroPublish = function(name, collection){
-  return Object.assign(astroMethods, {
+  return _.extend({}, astroMethods, {
     _name: name,
     _collection: collection,
     _predicates: [],
