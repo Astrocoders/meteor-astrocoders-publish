@@ -76,10 +76,6 @@ AstroPublish.compactMethods = function(methods, pub, args){
   }, {});
 };
 
-Mongo.Collection.prototype.publish = function(name){
-  if(_.isUndefined(name)){
-    throw new Error('[AstroPublish] You have to specify the publish name');
-  }
-
+Mongo.Collection.prototype.publish = function(name = this._name){
   return AstroPublish(name, this);
 };

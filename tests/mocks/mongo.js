@@ -1,2 +1,6 @@
 Mongo = {};
-Mongo.Collection = {};
+Mongo.Collection = {
+  prototype: {
+
+  },
+};
