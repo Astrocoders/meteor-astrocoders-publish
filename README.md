@@ -1,4 +1,4 @@
-[![](https://api.travis-ci.org/meteor-astrocoders-publish.svg)](https://travis-ci.org/astrocoders/meteor-astrocoders-publish)
+[![Build Status](https://travis-ci.org/Astrocoders/meteor-astrocoders-publish.svg?branch=master)](https://travis-ci.org/Astrocoders/meteor-astrocoders-publish)
 
 AstroPublish
 ============
