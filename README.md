@@ -1,3 +1,5 @@
+[![](https://api.travis-ci.org/meteor-astrocoders-publish.svg)](https://travis-ci.org/astrocoders/meteor-astrocoders-publish)
+
 AstroPublish
 ============
 Smart re-use your publications.
