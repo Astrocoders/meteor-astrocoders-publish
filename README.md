@@ -1,4 +1,4 @@
-AstroPublish
+AstroPublish [![Build Status](https://travis-ci.org/Astrocoders/meteor-astrocoders-publish.svg?branch=master)](https://travis-ci.org/Astrocoders/meteor-astrocoders-publish)
 ============
 Smart re-use your publications.
 
