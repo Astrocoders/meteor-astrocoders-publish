@@ -7,6 +7,13 @@ AP = AstroPublish = function(name, collection){
     _predicates: [],
     _mongoRules: [],
     _queries: [],
+    _debug: false,
+
+    debug(value){
+      this._debug = value;
+      
+      return this;
+    },
 
     ensureConditions(pub, pubArgs){
       return  _.every(this._predicates, (predicate) => {
@@ -20,6 +27,8 @@ AP = AstroPublish = function(name, collection){
       let self = this;
 
       Meteor.publish(this._name, function(...args){
+        if(self.debug) debugger;
+
         let query =
           AstroPublish.compactMethods(self._queries, this, args);
         let rules =
