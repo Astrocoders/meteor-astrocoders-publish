@@ -2,6 +2,12 @@ AstroPublish
 ============
 Smart re-use your publications.
 
+## Installation
+Use the Meteor package system
+~~~sh
+$ meteor install astrocoders:publish
+~~~
+
 Take a look at your current publications:
 ```js
   Meteor.publish('items', function(){
@@ -204,6 +210,11 @@ AstroPublish.defineMethod({
 // ...
 Items.publish('items').skip(5).apply();
 ```
+## Troubleshooting
+1. You used `.query(() => )` instead of `query(function(){})` so `this` is not going to work properly and you even noticed it ;);
+2. You forget to call `.apply()` and the end of the method chaining;
+3. Add a call to `.debug(true)` at the method chaining do debug with
+node-inspector.
 
 ## Testing
 Run tests using Meteor Command
