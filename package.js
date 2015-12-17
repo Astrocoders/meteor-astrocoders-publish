@@ -1,6 +1,6 @@
 Package.describe({
   name: 'astrocoders:publish',
-  version: '1.0.3',
+  version: '1.0.4',
   summary: 'Smart re-use your publications.',
   git: 'https://github.com/Astrocoders/meteor-astrocoders-publish',
   documentation: 'README.md'
@@ -10,7 +10,8 @@ Package.onUse(function(api) {
   api.versionsFrom('1.2.0.2');
   api.use([
     'ecmascript',
-    'mongo'
+    'mongo',
+    'underscore',
   ]);
 
   api.addFiles([
