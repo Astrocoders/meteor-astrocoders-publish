@@ -115,6 +115,21 @@ this.subscribe('fooEdit', fooId);
 // ...
 Items.publish('fooEdit').byGotId().apply();
 ```
+- *.with*. Publish a cursor of another collection in the same publication:
+```js
+Items.publish().with(ItemsPrices.publish()).apply();
+// You can have as with'es you want and use all the chain methods available
+// in the with'ed publication:
+Items.publish().with(ItemsPrices.publish()).with(Things.publish().ifSignedIn())
+.apply();
+```
+- *ifHasRole*. Only publish if the user is within one of the passed roles:
+```js
+Items.publish().ifHasRole('admin').apply();
+// as many as you need:
+Items.publish().ifHasRole('admin', 'super-cool').apply();
+```
+
 
 ## Extending with custom methods
 You can create custom methods calling `AstroPublish.definedMethod`.
