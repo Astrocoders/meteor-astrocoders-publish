@@ -8,10 +8,18 @@ AP = AstroPublish = function(name, collection){
     _mongoRules: [],
     _queries: [],
     _debug: false,
+    _verbose: false,
+    _withPubs: [],
+
+    with(astroPublish){
+      this._withPubs.push(astroPublish);
+
+      return this;
+    },
 
     debug(value){
       this._debug = value;
-      
+
       return this;
     },
 
@@ -23,21 +31,36 @@ AP = AstroPublish = function(name, collection){
       });
     },
 
+    getCursor(astroPub, pubContext, args){
+      let query =
+        AstroPublish.compactMethods(astroPub._queries, pubContext, args);
+      let rules =
+        AstroPublish.compactMethods(astroPub._mongoRules, pubContext, args);
+
+      return {query, rules};
+    },
+
     apply(){
       let self = this;
 
       Meteor.publish(this._name, function(...args){
-        if(self.debug) debugger;
-
-        let query =
-          AstroPublish.compactMethods(self._queries, this, args);
-        let rules =
-          AstroPublish.compactMethods(self._mongoRules, this, args);
+        if(self._debug) debugger;
 
         let allPredicatesPass = self.ensureConditions(this);
 
         if(allPredicatesPass){
-          return self._collection.find(query, rules);
+          let search = self.getCursor(self, this, args);
+          let cursors = [];
+          cursors.push(self._collection.find(search.query, search.rules));
+
+          self._withPubs.forEach((astroPub) => {
+            let pubSearch = self.getCursor(astroPub, this, args);
+            cursors.push(
+              astroPub._collection.find(pubSearch.query, pubSearch.rules)
+            );
+          });
+
+          return cursors;
         } else {
           this.ready();
         }
