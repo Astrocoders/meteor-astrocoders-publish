@@ -4,9 +4,9 @@ Smart re-use your publications.
 
 ## Installation
 Use the Meteor package system
-~~~sh
-$ meteor install astrocoders:publish
-~~~
+```sh
+$ meteor add astrocoders:publish
+```
 
 Take a look at your current publications:
 ```js
